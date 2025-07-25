@@ -21,13 +21,13 @@ clc;clear;close all;
     l_l = 0.5;
     
     % Masa de carga útil en el extremo [kg]
-    m_l = 0; % [+ 1.5]
+    m_l = 1.5; % [+ 1.5]
     
     % Inercia total al eje de rotación [kg.m^2]
     J_l = (m*l_cm^2 + J_cm) + (m_l * l_l^2); % Afectado por incertidumbre
 
     % Coeficiente de torque recuperador gravitacional [N.m]
-    k_l = m * g * l_cm + m_l * g * l_l; % Afectado por incertidumbre
+    k_l = m * l_cm + m_l* l_l; % Afectado por incertidumbre
 
     % Torque de perturbación [N.m]
     % T_per = 0; % [+- 5.0]
@@ -100,7 +100,7 @@ clc;clear;close all;
     % w_m_nom = 691.15;
 
     % Tensión nominal de línea, corriente alterna eficaz.[V_ca_rms]
-    % V_sl_nom = 24;
+    % V_sl_nom = 48;
 
     % Tensión nominal de línea, corriente alterna eficaz.[V_ca_rms]
     % V_sf_nom = V_sl_nom / sqrt(3);
@@ -115,10 +115,10 @@ clc;clear;close all;
     % Temp_s_max = 115.0;
 
     % Rango de temperatura ambiente de operación [ºC]
-    Temp_amb = 40; % [-55]   
+    %Temp_amb = 40; % [-55]   
 
     % Temperatura de referencia para el cobre [ºC]
-    Temp_s_ref = 40;
+    Temp_s_ref = 20;
 
     % Torque motor [N.m]
     %T_m = 0;
@@ -155,8 +155,8 @@ clc;clear;close all;
 
 %% ======== Observador ======== %%
 
-% K_e_theta = 6400;
-% K_e_omega = 3200^2;
+%K_e_theta = 6400;
+%K_e_omega = 3200^2;
 
 %% ======== Mejora consignas ======== %%
 
@@ -192,8 +192,8 @@ Ksia= J_eq*(omega_pos^3);
 
 %% ===== SS Sensores ====== %%
 
-omega_n_corrientes = 18000;
-omega_n_posicion = 6000;
+omega_n_corrientes = 6000*2;
+omega_n_posicion = 2000*2;
 
 A_corrientes = [0 1; -omega_n_corrientes^2 -2*omega_n_corrientes];
 B_corrientes = [0; omega_n_corrientes^2];
@@ -208,7 +208,7 @@ x0_posicion = [0; 0];
 A_temp = -1/20;
 B_temp = 1/20;
 C_temp = 1;
-x0_temp = 40;
+x0_temp = 20;
 
 
 %% ====== SS Inversor ===== %%
